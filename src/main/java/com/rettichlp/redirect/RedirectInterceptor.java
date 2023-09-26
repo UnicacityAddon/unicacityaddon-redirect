@@ -15,13 +15,12 @@ public class RedirectInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        if (request.getServerPort() != 8888) {
+        String uri = request.getRequestURI();
+        if (!uri.contains("unicacityaddon/v1/")) {
             return true;
         }
 
-        String uri = request.getRequestURI();
         String queryParameters = Optional.ofNullable(request.getQueryString()).orElse("");
-
         String redirect = "https://rettichlp.de:8443" + uri + (!queryParameters.isBlank() ? "?" + queryParameters : "");
 
         RestTemplate restTemplate = new RestTemplate();
@@ -30,7 +29,7 @@ public class RedirectInterceptor implements HandlerInterceptor {
         HttpStatus statusCode = responseEntity.getStatusCode();
         String responseBody = Optional.ofNullable(responseEntity.getBody()).orElse("");
 
-        ServerApplication.LOGGER.info("Redirect set: {} {} [{}]", uri, "with parameters " + queryParameters.replace("&", " and "), statusCode);
+        ServerApplication.LOGGER.info("Redirect set: {}{} [{}]", uri, queryParameters.replace("&", " and "), statusCode);
 
         response.setStatus(statusCode.value());
         response.getWriter().write(responseBody);
