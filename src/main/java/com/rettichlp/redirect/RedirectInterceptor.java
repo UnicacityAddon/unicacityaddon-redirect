@@ -3,6 +3,7 @@ package com.rettichlp.redirect;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -23,11 +24,18 @@ public class RedirectInterceptor implements HandlerInterceptor {
         String queryParameters = Optional.ofNullable(request.getQueryString()).orElse("");
         String redirect = "https://rettichlp.de:8443" + uri + (!queryParameters.isBlank() ? "?" + queryParameters : "");
 
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> responseEntity = restTemplate.getForEntity(redirect, String.class);
+        HttpStatus statusCode;
+        String responseBody;
 
-        HttpStatus statusCode = responseEntity.getStatusCode();
-        String responseBody = Optional.ofNullable(responseEntity.getBody()).orElse("");
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<String> responseEntity = restTemplate.getForEntity(redirect, String.class);
+            statusCode = responseEntity.getStatusCode();
+            responseBody = Optional.ofNullable(responseEntity.getBody()).orElse("");
+        } catch (HttpClientErrorException e) {
+            statusCode = e.getStatusCode();
+            responseBody = e.getResponseBodyAsString();
+        }
 
         ServerApplication.LOGGER.info("Redirect set: {}{} [{}]", uri, queryParameters.replace("&", " and "), statusCode);
 
