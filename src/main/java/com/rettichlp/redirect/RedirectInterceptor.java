@@ -20,7 +20,6 @@ public class RedirectInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String uri = URLDecoder.decode(request.getRequestURI(), StandardCharsets.UTF_8);
-        System.out.println(uri);
         if (!uri.contains("unicacityaddon/v1/")) {
             return true;
         }
