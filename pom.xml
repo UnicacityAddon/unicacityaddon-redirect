@@ -14,7 +14,7 @@
     <version>1.0.0</version>
 
     <name>Redirect</name>
-    <description>Redirect to SSL UnicacityAddon ServerApplication</description>
+    <description>Redirect to SSL application of UnicacityAddon</description>
 
     <properties>
         <java.version>17</java.version>
