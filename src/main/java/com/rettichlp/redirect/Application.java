@@ -1,19 +1,15 @@
 package com.rettichlp.redirect;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
-public class ServerApplication implements WebMvcConfigurer {
-
-    public static final Logger LOGGER = LoggerFactory.getLogger(ServerApplication.class);
+public class Application implements WebMvcConfigurer {
 
     public static void main(String[] args) {
-        SpringApplication.run(ServerApplication.class, args);
+        SpringApplication.run(Application.class, args);
     }
 
     @Override

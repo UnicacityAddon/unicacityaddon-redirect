@@ -1,5 +1,6 @@
 package com.rettichlp.redirect;
 
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -14,6 +15,7 @@ import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
+@Log4j2
 @Component
 public class RedirectInterceptor implements HandlerInterceptor {
 
@@ -41,7 +43,7 @@ public class RedirectInterceptor implements HandlerInterceptor {
         }
 
         if (!uri.contains("/authorize")) {
-            ServerApplication.LOGGER.info("Redirect set: {}{}{} [{}]", uri, !queryParameters.isBlank() ? "?" : "", queryParameters.replace("&", " and "), statusCode);
+            log.info("Redirect set: {}{}{} [{}]", uri, !queryParameters.isBlank() ? "?" : "", queryParameters.replace("&", " and "), statusCode);
         }
 
         response.setStatus(statusCode.value());
