@@ -1,4 +1,4 @@
-package com.rettichlp.redirect;
+package com.rettichlp.unicacityaddon.redirect;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
