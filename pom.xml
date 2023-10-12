@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.rettichlp</groupId>
+    <groupId>com.rettichlp.unicacityaddon</groupId>
     <artifactId>redirect</artifactId>
     <version>1.0.0</version>
 
